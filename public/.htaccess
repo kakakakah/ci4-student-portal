@@ -1,0 +1,32 @@
+# CI4 Student Portal – public/.htaccess
+# Week 15 – Deployment: CI4 URL rewriting (removes index.php)
+# Week 15 – Security: disables directory listing
+# ============================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Week 15 Security: Disable directory listing
+    Options -Indexes
+
+    # Redirect HTTP → HTTPS (Week 15 Security & SSL)
+    # Uncomment on production after SSL cert is installed:
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Send requests through CI4's front controller
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # If mod_rewrite is unavailable, show a helpful error
+    ErrorDocument 404 /index.php
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "(\.env|composer\.json|composer\.lock|phpunit\.xml)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
