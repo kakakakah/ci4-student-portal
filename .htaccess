@@ -1,7 +1,3 @@
-# CI4 Student Portal – Root .htaccess
-# Week 15 – Deployment: "Redirect all traffic to /public/"
-# ============================================================
-
 <IfModule mod_rewrite.c>
     RewriteEngine On
 

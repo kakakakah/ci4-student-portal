@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
@@ -15,10 +14,14 @@ class Students extends BaseController
         $this->model = new StudentModel();
     }
 
-
+    // ── GET /students ─────────────────────────────────────────
     public function index(): string
     {
 
+
+        // dd($this->model);   // ← UNCOMMENT THIS FOR THE SCREENSHOT
+
+ 
         $search = trim((string) $this->request->getGet('search'));
 
         $data = $this->model->getStudentsPaginated($search, 5);
@@ -34,7 +37,10 @@ class Students extends BaseController
         ]);
     }
 
-
+    // ── GET /students/:id ─────────────────────────────────────
+    /**
+     * Single student profile view.
+     */
     public function show(int $id): string
     {
         $student = $this->model->getStudent($id);
